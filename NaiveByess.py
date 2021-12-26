@@ -91,7 +91,6 @@ results = [resultOfSetosa, resultOfVersicolor, resultOfVirginica]
 
 maxValue = max(resultOfSetosa, resultOfVersicolor, resultOfVirginica)
 
-for i, value in enumerate(results):
-    if maxValue == value:
-        print("Given values belongs to Iris-Setosa Plant") if i == 0 else print(
-            "Given values belongs to Iris-Versicolor Plant") if i == 1 else print("Given values belongs to Iris-Virginica Plant") if i == 2 else print('Theres some error')
+[print("Given values belongs to Iris-Setosa Plant") if index == 0 else print(
+    "Given values belongs to Iris-Versicolor Plant") if index == 1 else print("Given values belongs to Iris-Virginica Plant") if index == 2 else print('Theres some error')
+ for (index, result) in enumerate(results) if maxValue == result]
