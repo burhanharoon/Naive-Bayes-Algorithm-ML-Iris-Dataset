@@ -1,12 +1,5 @@
-import os
 from irisDataSet import irisDataSet
 from operator import itemgetter
-
-
-def clear(): return os.system('cls')
-
-
-clear()
 
 irisTypes = ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
 
@@ -31,13 +24,9 @@ def probabilityOfPlant(dataset, classType):
 
 # Finds the probability of single feature to a single class type
 def probabilityOfFeatureToClass(feature, classType, featureValue, dataset):
-    plantArray = []
     count = 0
     for data in dataset:
-        if data['class'] == classType:
-            plantArray.append(data)
-    for plant in plantArray:
-        if plant[feature] == featureValue:
+        if data['class'] == classType and data[feature] == featureValue:
             count = count+1
     return count
 
@@ -53,10 +42,10 @@ def probabilityOfAllFeatures(classType, countOfClass, featureValue, dataset):
     probabilityOfPetalWidth = probabilityOfFeatureToClass(
         'petalWidth', classType, featureValue[3], dataset)
     probabilities = {
-        'probabilityOfSepalLength': probabilityOfSepalLength/50,
-        'probabilityOfSepalWidth': probabilityOfSepalWidth/50,
-        'probabilityOfPetalLength': probabilityOfPetalLength/50,
-        'probabilityOfPetalWidth': probabilityOfPetalWidth/50
+        'probabilityOfSepalLength': probabilityOfSepalLength/countOfClass,
+        'probabilityOfSepalWidth': probabilityOfSepalWidth/countOfClass,
+        'probabilityOfPetalLength': probabilityOfPetalLength/countOfClass,
+        'probabilityOfPetalWidth': probabilityOfPetalWidth/countOfClass
     }
     return probabilities
 
@@ -84,11 +73,11 @@ probabilityOfIrisVirginica = countOfIrisVirginica/totalNumOfPlants
 
 # Getting probabilitie of all features to a class
 probOfAllFeaturesToSetosa = probabilityOfAllFeatures(
-    'Iris-setosa', 50, featureValueList, irisDataSet)
+    'Iris-setosa', countOfIrisSetosa, featureValueList, irisDataSet)
 probOfAllFeaturesToVersicolor = probabilityOfAllFeatures(
-    'Iris-versicolor', 50, featureValueList, irisDataSet)
+    'Iris-versicolor', countOfIrisVersicolor, featureValueList, irisDataSet)
 probOfAllFeaturesToVirginica = probabilityOfAllFeatures(
-    'Iris-virginica', 50, featureValueList, irisDataSet)
+    'Iris-virginica', countOfIrisVirginica, featureValueList, irisDataSet)
 
 # Getting Results for all plants
 resultOfSetosa = totalProbability(
@@ -105,4 +94,4 @@ maxValue = max(resultOfSetosa, resultOfVersicolor, resultOfVirginica)
 for i, value in enumerate(results):
     if maxValue == value:
         print("Given values belongs to Iris-Setosa Plant") if i == 0 else print(
-            "Given values belongs to Iris-Versicolor Plant") if i == 1 else print("Given values belongs to Iris-Virginica Plant")
+            "Given values belongs to Iris-Versicolor Plant") if i == 1 else print("Given values belongs to Iris-Virginica Plant") if i == 2 else print('Theres some error')
