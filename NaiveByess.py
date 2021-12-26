@@ -1,5 +1,6 @@
-from irisDataSet import irisDataSet
 import os
+from irisDataSet import irisDataSet
+from operator import itemgetter
 
 
 def clear(): return os.system('cls')
@@ -18,9 +19,8 @@ featureValueList = [sepalLength, sepalWidth, petalLength, petalWidth]
 
 totalNumOfPlants = len(irisDataSet)  # 150
 
+
 # Find the probablity of a specific plant type
-
-
 def probabilityOfPlant(dataset, classType):
     count = 0
     for data in dataset:
@@ -61,13 +61,14 @@ def probabilityOfAllFeatures(classType, countOfClass, featureValue, dataset):
     return probabilities
 
 
+# Computes the total probability
 def totalProbability(probabilityOfClass, probabilityOfAllFeaturesToClass):
-    w = probabilityOfAllFeaturesToClass['probabilityOfSepalLength']
-    x = probabilityOfAllFeaturesToClass['probabilityOfSepalWidth']
-    y = probabilityOfAllFeaturesToClass['probabilityOfPetalLength']
-    z = probabilityOfAllFeaturesToClass['probabilityOfPetalWidth']
-    result = probabilityOfClass*w*x*y*z
-    return result
+    w, x, y, z = itemgetter('probabilityOfSepalLength', 'probabilityOfSepalWidth',
+                            'probabilityOfPetalLength', 'probabilityOfPetalWidth')(probabilityOfAllFeaturesToClass)
+    return probabilityOfClass*w*x*y*z
+
+
+# <--------------------MAIN--------------------->
 
 
 # Getting the count of every plant type
@@ -103,9 +104,5 @@ maxValue = max(resultOfSetosa, resultOfVersicolor, resultOfVirginica)
 
 for i, value in enumerate(results):
     if maxValue == value:
-        if i == 0:
-            print("Given values belongs to Iris-Setosa Plant")
-        elif i == 1:
-            print("Given values belongs to Iris-Versicolor Plant")
-        elif i == 2:
-            print("Given values belongs to Iris-Virginica Plant")
+        print("Given values belongs to Iris-Setosa Plant") if i == 0 else print(
+            "Given values belongs to Iris-Versicolor Plant") if i == 1 else print("Given values belongs to Iris-Virginica Plant")
