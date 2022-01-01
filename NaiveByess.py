@@ -13,22 +13,24 @@ featureValueList = [sepalLength, sepalWidth, petalLength, petalWidth]
 totalNumOfPlants = len(irisDataSet)  # 150
 
 
+def increment(value):
+    value[0] += 1
+    return value
+
+
 # Find the probablity of a specific plant type
 def probabilityOfPlant(dataset, classType):
-    count = 0
-    for data in dataset:
-        if data['class'] == classType:
-            count = count+1
-    return count
+    count = [0]
+    [increment(count) for data in dataset if data['class'] == classType]
+    return count[0]
 
 
 # Finds the probability of single feature to a single class type
 def probabilityOfFeatureToClass(feature, classType, featureValue, dataset):
-    count = 0
-    for data in dataset:
-        if data['class'] == classType and data[feature] == featureValue:
-            count = count+1
-    return count
+    count = [0]
+    [increment(count) for data in dataset if data['class'] ==
+     classType and data[feature] == featureValue]
+    return count[0]
 
 
 # Returns the probability of a feature(length etc) to a class(plant type)
